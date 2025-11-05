@@ -51,7 +51,6 @@ func hash64DefaultFnv(data []byte, h hash.Hash64) uint64 {
 		h.Reset()
 		return sum
 	}
-	fnv.New64()
 
 	var sum uint64 = 14695981039346656037
 	for _, c := range data {
