@@ -21,6 +21,9 @@ jobs:
         with:
           go-version: ${{ matrix.go-version }}
 
+      - name: Install system dependencies
+        run: sudo apt-get update && sudo apt-get install -y wamerican
+
       - name: Checkout code
         uses: actions/checkout@v4
         with:
@@ -32,8 +35,9 @@ jobs:
           echo "$GITHUB_WORKSPACE/bin" >> $GITHUB_PATH
 
       - name: Install dependencies
-        run: GO111MODULE=off go get -v -t -d ./...
-        working-directory: src/github.com/${{ github.repository }}
+        run: |
+          mkdir -p $GOPATH/src/github.com/d4l3k
+          git clone https://github.com/d4l3k/messagediff.git $GOPATH/src/github.com/d4l3k/messagediff
 
       - name: Run tests with coverage
         run: GO111MODULE=off go test -cover ./...
